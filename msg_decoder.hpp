@@ -4,7 +4,7 @@
 class msg_decoder : public pause_listener, public rtos::task<>{
 private:
     msg_listener & listener;
-    enum class states = {idle, message};
+    enum class states {idle, message};
     rtos::channel<int, 10> pauses;
 public:
     msg_decoder(msg_listener & listener):
@@ -30,7 +30,12 @@ public:
                     if(p > 200 && p < 2000){
                         n++;
                         m = m << 1;
-                        
+                        bool o = m | ( p > 1000 );
+                        if( n != 0 ){
+                            check( m );
+                            state = states::idle;
+                        }
+                    }else{
                         state = states::idle;
                     }
                     break;

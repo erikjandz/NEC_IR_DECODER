@@ -27,7 +27,7 @@ public:
                     break;
                  case signal:
                     wait_us(100);
-                    if(!IR.get()){
+                    if(IR.get() == 0){
                         n = 0;
                         state = states::idle;
                     }
